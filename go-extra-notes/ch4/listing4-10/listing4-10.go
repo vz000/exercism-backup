@@ -1,6 +1,7 @@
 // Example of select block
 package main
 
+// Add "time" when using the timeout approach
 import (
 	"fmt"
 	"math"
@@ -54,6 +55,17 @@ func printValues(fibs <-chan fibvalue, sqrs <-chan squarevalue) {
 		case sqr := <-sqrs:
 			fmt.Printf("Square value of %d is %d\n", sqr.input, sqr.value)
 		}
+		/*
+		Example with time out:
+		select {
+			case fib := <-fibs:
+				fmt.Printf("")
+			case sqr := <-sqrs:
+				fmt.Printf("")
+			case <-time.After(time.Second * 3):
+				fmt.Println("timed out")
+		}
+		*/
 	}
 }
 
