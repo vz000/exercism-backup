@@ -18,7 +18,7 @@ func CanSignalPrisoner(archerIsAwake, prisonerIsAwake bool) bool {
 // CanFreePrisoner can be executed if the prisoner is awake and the other 2 characters are asleep
 // or if Annalyn's pet dog is with her and the archer is sleeping.
 func CanFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent bool) bool {
-	withPetDog := petDogIsPresent && !archerIsAwake
-    noPetDog := !petDogIsPresent && prisonerIsAwake && (!knightIsAwake && !archerIsAwake)
-    return withPetDog || noPetDog
+	withDog := petDogIsPresent && !archerIsAwake
+    noDog := prisonerIsAwake && (!knightIsAwake && !archerIsAwake)
+    return withDog || noDog
 }
