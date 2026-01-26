@@ -3,7 +3,6 @@ package speed
 type Car struct {
     battery, batteryDrain, speed, distance int
 }
-
 // NewCar creates a new remote controlled car with full battery and given specifications.
 func NewCar(speed, batteryDrain int) Car {
 	return Car{
@@ -15,38 +14,31 @@ func NewCar(speed, batteryDrain int) Car {
 }
 
 type Track struct {
-    distance int
+	distance int    
 }
-
 // NewTrack creates a new track
 func NewTrack(distance int) Track {
 	return Track{
-        distance,
+        distance: distance,
     }
 }
 
 // Drive drives the car one time. If there is not enough battery to drive one more time,
 // the car will not move.
 func Drive(car Car) Car {
-    if car.battery - car.batteryDrain >= 0 {
-     	car.distance = car.distance + car.speed
-        car.battery = car.battery - car.batteryDrain
+    battery := car.battery - car.batteryDrain
+	if battery >= 0 {
+        car.distance += car.speed
+        car.battery = battery
     }
     return car
 }
 
 // CanFinish checks if a car is able to finish a certain track.
 func CanFinish(car Car, track Track) bool {
-	for k := 0; k <= track.distance; k++ {
-        if car.battery - car.batteryDrain < 0 {
-            break
-        } else {
-         	car = Drive(car)   
-        }
-    }
-    if car.distance >= track.distance {
+    estimatedBatteryConsumption := (track.distance / car.speed) * car.batteryDrain
+    if estimatedBatteryConsumption <= car.battery {
         return true
-    } else {
-        return false
     }
+    return false
 }
